@@ -5,6 +5,12 @@ import numpy as np
 import time
 from transformers import pipeline
 
+#  SETUP (Always at the top)
+    st.set_page_config(page_title="Astrielle AI", layout="centered")
+
+    # TITLE & HEADER
+    st.title("Astrielle AI: State Monitor")
+    st.write("Welcome to your professional analysis dashboard.")
 
 # --- 1. Load the Voice AI (The part that works!) ---
 @st.cache_resource
@@ -76,29 +82,20 @@ if uploaded_file:
         elif diff < -0.1:
             st.info("📉 Trend: You are calming down. Great job!")
 
-    import streamlit as st
 
-    # 1. SETUP (Always at the top)
-    st.set_page_config(page_title="Astrielle AI", layout="centered")
+    # Microphone Section
+st.subheader("🎤 Voice Input")
+audio_input = st.audio_input("Record a test clip")
 
-    # 2. TITLE & HEADER
-    st.title("Astrielle AI: State Monitor")
-    st.write("Welcome to your professional analysis dashboard.")
-
-    # 3. THE MICROPHONE (This is where the code goes!)
-    st.subheader("🎤 Voice Input")
-    audio_input = st.audio_input("Record a test clip")
-
-    if audio_input:
-        st.audio(audio_input)
-        st.download_button(
-            label="📥 Download Recording",
-            data=audio_input,
-            file_name="recording.wav",
-            mime="audio/wav"
-        )
-
-    # 4. REST OF YOUR APP...
+if audio_input:
+    st.audio(audio_input)
+    st.download_button(
+        label="📥 Download Recording",
+        data=audio_input,
+        file_name="recording.wav",
+        mime="audio/wav"
+    )
+    
 
 
     # --- LEGAL FOOTER ---
