@@ -48,7 +48,7 @@ if audio_value:
 
     # --- 4. FUSION LAYER ---
     # Since Face AI is stuck, we simulate a "Face Vector"
-    # to show you how the Fusion logic handles conflicting data
+    # to show us how the Fusion logic handles conflicting data
     f_score = st.slider("Simulated Face Stress (Adjust me!)", 0.0, 1.0, 0.4)
 
     final_fusion_score = (v_score * v_weight) + (f_score * f_weight)
@@ -86,13 +86,27 @@ if audio_value:
             st.info("📉 Trend: You are calming down. Great job!")
 
 #Voice Record
-    st.subheader("🎤 Live Voice Input")
-    audio_value = st.audio_input("Record your voice to analyze")
+import streamlit as st
 
-    if audio_value:
-        st.audio(audio_value)
-        st.success("Recording captured! Processing...")
-        # This is where the AI analysis code will go
+# 1. SETUP (Always at the top)
+st.set_page_config(page_title="Astrielle AI", layout="centered")
+
+# 2. TITLE & HEADER
+st.title("Astrielle AI: State Monitor")
+st.write("Welcome to your professional analysis dashboard.")
+
+# 3. THE MICROPHONE (This is where the code goes!)
+st.subheader("🎤 Voice Input")
+audio_input = st.audio_input("Record a test clip")
+
+if audio_input:
+    st.audio(audio_input)
+    st.download_button(
+        label="📥 Download Recording",
+        data=audio_input,
+        file_name="recording.wav",
+        mime="audio/wav"
+    )
 
 
 # --- LEGAL FOOTER ---
