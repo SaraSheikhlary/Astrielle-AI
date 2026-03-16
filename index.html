@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astrielle AI</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #0e1117; }
-        iframe { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
+        body { 
+            margin: 0; padding: 0; height: 100vh; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            background-color: #0e1117; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        .container { text-align: center; padding: 20px; }
+        h1 { font-size: 3rem; margin-bottom: 10px; letter-spacing: 2px; }
+        p { color: #888; margin-bottom: 30px; font-size: 1.2rem; }
+        .btn {
+            background: linear-gradient(45deg, #ff4b4b, #ff7e5f);
+            color: white; text-decoration: none; padding: 15px 40px;
+            border-radius: 50px; font-weight: bold; font-size: 1.2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 75, 75, 0.4); }
     </style>
 </head>
 <body>
-    <iframe src="https://astrielle-monitor-app-zdhgxrjugepdkz5puumneb.streamlit.app/?embedded=true" allow="camera; microphone"></iframe>
+    <div class="container">
+        <h1>✨ ASTRIELLE AI ✨</h1>
+        <p>State Monitoring & Voice Analysis Dashboard</p>
+        <a href="https://astrielle-monitor-app-zdhgxrjugepdkz5puumneb.streamlit.app/" class="btn">Launch Dashboard</a>
+    </div>
 </body>
 </html>
