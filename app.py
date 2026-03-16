@@ -76,16 +76,8 @@ if uploaded_file:
         elif diff < -0.1:
             st.info("📉 Trend: You are calming down. Great job!")
 
-    import streamlit as st
 
-    # 1. SETUP (Always at the top)
-    st.set_page_config(page_title="Astrielle AI", layout="centered")
-
-    # 2. TITLE & HEADER
-    st.title("Astrielle AI: State Monitor")
-    st.write("Welcome to your professional analysis dashboard.")
-
-    # 3. THE MICROPHONE (This is where the code goes!)
+    # THE MICROPHONE (This is where the code goes!)
     st.subheader("🎤 Voice Input")
     audio_input = st.audio_input("Record a test clip")
 
@@ -98,7 +90,7 @@ if uploaded_file:
             mime="audio/wav"
         )
 
-    # 4. REST OF YOUR APP...
+
 
 
     # --- LEGAL FOOTER ---
