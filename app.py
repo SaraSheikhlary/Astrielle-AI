@@ -78,25 +78,17 @@ if uploaded_file:
 
 
 # --- LEGAL FOOTER ---
+
+st.write("") # This adds some breathing room
+st.write("") 
+
 st.markdown(
     """
-    <style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: transparent;
-        color: grey;
-        text-align: center;
-        font-size: 0.8em;
-        padding: 10px;
-    }
-    </style>
-    <div class="footer">
+    <div style="text-align: center; color: grey; font-size: 0.8em; margin-top: 50px; padding-bottom: 20px;">
         © 2026 Astrielle AI | <b>Privacy & Terms</b><br>
-        This app uses AI-generated data for monitoring purposes. We do not collect or store personal user data.
+        This app uses AI-generated data for monitoring purposes. 
+        We do not collect or store personal user data.
     </div>
-    """,
+    """, 
     unsafe_allow_html=True
 )
