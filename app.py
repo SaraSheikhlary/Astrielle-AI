@@ -7,6 +7,34 @@ from transformers import pipeline
 
 import streamlit as st
 
+st.set_page_config(layout="wide", page_title="Astrielle AI")
+
+# --- THE BEAUTY BACKGROUND CODE ---
+st.markdown("""
+    <style>
+        .stApp {
+            /* This adds the high-quality Cosmic Space image safely */
+            background: linear-gradient(rgba(14, 17, 23, 0.8), rgba(14, 17, 23, 0.8)), 
+                        url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* This makes the sidebar look like glass */
+        section[data-testid="stSidebar"] {
+            background-color: rgba(30, 30, 30, 0.5) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        /* This ensures your words stay bright white */
+        h1, h2, h3, p, span, label, .stMarkdown {
+            color: #ffffff !important;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # 1. Reset the page layout
 st.set_page_config(layout="wide", page_title="Astrielle AI")
 
