@@ -80,43 +80,29 @@ if uploaded_file:
             st.info("📉 Trend: You are calming down. Great job!")
 
 
-   # --- MICROPHONE SECTION ---
-st.subheader("🎤 Live Voice Input")
-audio_value = st.audio_input("Record your voice to analyze")
-
-if audio_value:
-    st.audio(audio_value)
-    # The button will only appear AFTER they record something
-    st.download_button(
-        label="📥 Download Recording",
-        data=audio_value,
-        file_name="my_recording.wav",
-        mime="audio/wav"
-    )
-
-#Analyis of the recorded voice
-import streamlit as st
-
-st.title("Astrielle AI Voice Monitor")
-
-# 1. The Microphone Widget
-# This creates the recording interface on your .com site
+ # --- THE MICROPHONE SECTION ---
 recorded_voice = st.audio_input("Record your voice for AI analysis")
 
-# 2. The Automatic Trigger
 if recorded_voice:
-    st.success("Voice captured!")
-    
-    # This is where the magic happens
-    with st.spinner("Astrielle is analyzing your voice patterns..."):
+    with st.spinner("Astrielle AI is analyzing your live voice..."):
+        # 1. Load the recorded voice just like you do on line 33
+        import librosa
+        speech, sr = librosa.load(recorded_voice, sr=16000)
         
-        # IMPORTANT: Replace 'process_audio' with the actual name 
-        # of your analysis function in your code
-        analysis_results = process_audio(recorded_voice)
+        # 2. Use your 'classifier' (matching line 34)
+        result = classifier(speech)
         
-        # 3. Display the results
-        st.subheader("Analysis Results")
-        st.write(analysis_results)
+        # 3. Calculate the stress score (matching lines 38-41)
+        v_score = 0.0
+        for r in result:
+            if r['label'] == 'ang':
+                v_score = r['score']
+        
+        # 4. Show the results
+        st.success(f"Analysis Complete! Voice Stress Score: {v_score:.2f}")
+        st.write(result)
+
+
 
     # --- LEGAL FOOTER ---
     # --- LOCKED BOTTOM FOOTER ---
