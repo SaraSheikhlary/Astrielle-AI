@@ -75,3 +75,17 @@ if uploaded_file:
             st.warning("📈 Trend: Stress levels are rising. Take a break?")
         elif diff < -0.1:
             st.info("📉 Trend: You are calming down. Great job!")
+
+
+# --- LEGAL FOOTER ---
+st.markdown("---")
+st.markdown(
+    """
+    <div style="text-align: center; color: grey; font-size: 0.8em;">
+        © 2026 Astrielle AI | <b>Privacy & Terms</b><br>
+        This app uses AI-generated data for monitoring purposes. 
+        We do not collect or store personal user data.
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
