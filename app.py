@@ -78,31 +78,30 @@ if uploaded_file:
 
 
 # --- LEGAL FOOTER ---
+# --- LOCKED BOTTOM FOOTER ---
 st.markdown(
     """
     <style>
-    /* This forces the app to take up the full screen height */
-    .main .block-container {
-        display: flex;
-        flex-direction: column;
-        min-height: 80vh;
+    .reportview-container .main .block-container {
+        padding-bottom: 100px;
     }
-    .spacer {
-        flex-grow: 1;
-    }
-    .custom-footer {
-        text-align: center;
-        color: grey;
-        font-size: 0.8em;
-        padding: 20px 0;
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
         width: 100%;
+        background-color: white; /* Matches your background */
+        color: grey;
+        text-align: center;
+        font-size: 0.8em;
+        padding: 15px 0;
+        z-index: 999;
     }
     </style>
-    <div class="spacer"></div>
-    <div class="custom-footer">
+    <div class="footer">
         © 2026 Astrielle AI | <b>Privacy & Terms</b><br>
         This app uses AI-generated data for monitoring purposes. We do not collect or store personal user data.
     </div>
-    """, 
+    """,
     unsafe_allow_html=True
 )
