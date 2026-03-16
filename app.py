@@ -37,6 +37,15 @@ if uploaded_file:
         if r['label'] == 'ang':
             v_score = r['score']
 
+    #Voice Input
+    st.subheader("🎤 Live Voice Input")
+audio_value = st.audio_input("Record your voice to analyze")
+
+if audio_value:
+    st.audio(audio_value)
+    st.success("Recording captured! Processing...")
+    # This is where your AI analysis code will go
+
     # --- 4. FUSION LAYER ---
     # Since Face AI is stuck, we simulate a "Face Vector"
     # to show you how the Fusion logic handles conflicting data
