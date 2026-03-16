@@ -7,24 +7,23 @@ from transformers import pipeline
 
 import streamlit as st
 
-# 1. This must be the first Streamlit command
-st.set_page_config(layout="wide")
+# 1. Reset the page layout
+st.set_page_config(layout="wide", page_title="Astrielle AI")
 
-# 2. This CSS forces the app to be see-through
+# 2. Force the colors back to professional dark mode
 st.markdown("""
     <style>
-        /* This makes the main background transparent */
+        /* This brings back the solid background so words are visible */
         .stApp {
-            background: rgba(0,0,0,0) !important;
+            background-color: #0e1117 !important;
         }
-        /* This makes the sidebar transparent */
-        section[data-testid="stSidebar"] {
-            background-color: rgba(0,0,0,0.3) !important;
-            backdrop-filter: blur(10px);
-        }
-        /* This makes your text white so you can read it on the dark stars */
+        /* This ensures all text is bright and readable */
         h1, h2, h3, p, span, label {
-            color: white !important;
+            color: #fafafa !important;
+        }
+        /* This fixes the sidebar color */
+        section[data-testid="stSidebar"] {
+            background-color: #262730 !important;
         }
     </style>
 """, unsafe_allow_html=True)
