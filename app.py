@@ -81,24 +81,27 @@ if uploaded_file:
 st.markdown(
     """
     <style>
-    /* This targets the main container to allow absolute positioning inside it */
+    /* This forces the app to take up the full screen height */
     .main .block-container {
-        padding-bottom: 5rem;
+        display: flex;
+        flex-direction: column;
+        min-height: 80vh;
     }
-    .ultimate-footer {
-        position: absolute;
-        bottom: -20px;
-        left: 0;
-        right: 0;
+    .spacer {
+        flex-grow: 1;
+    }
+    .custom-footer {
         text-align: center;
         color: grey;
         font-size: 0.8em;
+        padding: 20px 0;
+        width: 100%;
     }
     </style>
-    <div class="ultimate-footer">
+    <div class="spacer"></div>
+    <div class="custom-footer">
         © 2026 Astrielle AI | <b>Privacy & Terms</b><br>
-        This app uses AI-generated data for monitoring purposes. 
-        We do not collect or store personal user data.
+        This app uses AI-generated data for monitoring purposes. We do not collect or store personal user data.
     </div>
     """, 
     unsafe_allow_html=True
