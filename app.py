@@ -99,7 +99,7 @@ st.markdown(
     }
     </style>
     <div class="footer">
-        © 2026 Astrielle AI | <b>Privacy & Terms</b><br>
+                                © 2026 Astrielle AI | <b>Privacy & Terms</b><br>
         This app uses AI-generated data for monitoring purposes. We do not collect or store personal user data.
     </div>
     """,
