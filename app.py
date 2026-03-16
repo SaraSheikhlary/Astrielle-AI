@@ -37,7 +37,7 @@ if uploaded_file:
         if r['label'] == 'ang':
             v_score = r['score']
 
-    #Voice Input
+
     st.subheader("🎤 Live Voice Input")
 audio_value = st.audio_input("Record your voice to analyze")
 
@@ -84,6 +84,15 @@ if audio_value:
             st.warning("📈 Trend: Stress levels are rising. Take a break?")
         elif diff < -0.1:
             st.info("📉 Trend: You are calming down. Great job!")
+
+#Voice Record
+    st.subheader("🎤 Live Voice Input")
+    audio_value = st.audio_input("Record your voice to analyze")
+
+    if audio_value:
+        st.audio(audio_value)
+        st.success("Recording captured! Processing...")
+        # This is where the AI analysis code will go
 
 
 # --- LEGAL FOOTER ---
