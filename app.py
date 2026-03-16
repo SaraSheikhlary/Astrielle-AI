@@ -16,10 +16,9 @@ classifier = load_voice_model()
 
 # --- 2. Website Setup ---
 st.markdown("<h1 style='text-align: center;'>✨ Astrielle AI: State Monitor ✨</h1>", unsafe_allow_html=True)
-
-# 3. Add a subtle divider line under the title
 st.divider()
-st.sidebar.header("Fusion Weights")
+
+st.sidebar.header("✨ Fusion Weights")
 v_weight = st.sidebar.slider("Voice Importance", 0.0, 1.0, 0.7)
 f_weight = 1.0 - v_weight
 
