@@ -90,7 +90,14 @@ if audio_value:
         file_name="my_recording.wav",
         mime="audio/wav"
     )
+#Microphone Testing
+import streamlit as st
 
+st.title("Mic Test")
+audio_input = st.audio_input("Record a test clip")
+
+if audio_input:
+    st.audio(audio_input)
 
     # --- LEGAL FOOTER ---
     # --- LOCKED BOTTOM FOOTER ---
