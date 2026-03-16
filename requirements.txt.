@@ -1,0 +1,6 @@
+streamlit
+librosa
+transformers
+torch
+pandas
+numpy
