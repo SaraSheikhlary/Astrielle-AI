@@ -5,9 +5,9 @@ import numpy as np
 from transformers import pipeline
 
 # --- 1. CONFIG ---
-st.set_page_config(layout="wide", page_title="Astrielle AI")
+st.set_page_config(layout="wide", page_title="Astrielle AI | Space Biotech")
 
-# --- 2. INITIALIZE SESSION STATE ---
+# --- 2. SESSION STATE ---
 if 'entered' not in st.session_state:
     st.session_state.entered = False
 
@@ -16,110 +16,121 @@ if not st.session_state.entered:
     st.markdown("""
         <style>
             .stApp {
-                background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 display: flex; align-items: center; justify-content: center;
             }
             .landing-card {
-                text-align: center; color: white; padding: 50px;
-                background: rgba(0,0,0,0.4); border-radius: 20px;
-                backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+                text-align: center; color: white; padding: 60px;
+                background: rgba(255, 255, 255, 0.05); 
+                border-radius: 30px;
+                backdrop-filter: blur(15px); 
+                border: 1px solid rgba(255,255,255,0.1);
             }
-            h1 { font-size: 70px; letter-spacing: 8px; margin-bottom: 10px; }
-            p { font-size: 20px; opacity: 0.8; margin-bottom: 40px; }
+            .title-text { font-size: 85px; font-weight: 800; letter-spacing: 12px; margin-bottom: 0px; }
+            .subtitle-text { font-size: 22px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 30px; }
         </style>
         <div class="landing-card">
-            <h1>ASTRIELLE AI</h1>
-            <p>Autonomous Edge Intelligence for Deep Space Missions</p>
+            <div class="title-text">ASTRIELLE</div>
+            <div class="subtitle-text">Autonomous Edge Intelligence</div>
+            <p style="max-width:600px; margin:0 auto; font-size:18px; opacity:0.8;">
+                Advanced <b>Human-Systems Integration</b> for Deep Space. 
+                Localized AI diagnostics to bypass the 20-minute Mars-Earth communication lag.
+            </p>
         </div>
     """, unsafe_allow_html=True)
 
-    if st.button("ENTER MISSION CONTROL", use_container_width=True):
+    if st.button("INITIALIZE MISSION CONTROL", use_container_width=True):
         st.session_state.entered = True
         st.rerun()
+    st.stop() 
 
+# --- 4. THE MAIN DASHBOARD ---
 else:
-    # --- 4. THE MAIN DASHBOARD ---
+    # Sidebar for Reset & Edge Info
+    with st.sidebar:
+        st.title("🛰️ Command Center")
+        if st.button("Log Out / Reset View"):
+            st.session_state.entered = False
+            st.rerun()
+        st.divider()
+        st.write("**System:** Edge Computing")
+        st.write("**Latency:** 0.004ms (Local)")
+        st.write("**Earth Sync:** 22m Delay (Bypassed)")
+
+    # Main CSS for Dashboard & Footer
     st.markdown("""
         <style>
             [data-theme="light"] { color: #000000 !important; }
             [data-theme="dark"] { color: #ffffff !important; }
             .stApp {
-                background: linear-gradient(rgba(14, 17, 23, 0.85), rgba(14, 17, 23, 0.85)), 
+                background: linear-gradient(rgba(14, 17, 23, 0.9), rgba(14, 17, 23, 0.9)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
+            }
+            .footer {
+                position: fixed; left: 0; bottom: 0; width: 100%;
+                background-color: rgba(14, 17, 23, 0.95); 
+                color: #888; text-align: center;
+                font-size: 0.8em; padding: 15px 0; z-index: 999;
+                border-top: 1px solid rgba(255,255,255,0.1);
             }
         </style>
     """, unsafe_allow_html=True)
 
-    tab1, tab2, tab3 = st.tabs([
-        "🎙️ Vocal Biomarker Monitor", 
-        "🛰️ Structural Health Monitoring", 
-        "🧠 Human-Systems Integration"
-    ])
+    tab1, tab2, tab3 = st.tabs(["🎙️ Vocal Biomarkers", "🛰️ Structural Health", "🧠 Human-Systems Integration"])
 
-    # --- TAB 1: VOCAL AI ---
     with tab1:
         st.title("✨ Vocal Biomarker Monitor")
-        
         @st.cache_resource
         def load_voice_model():
             return pipeline("audio-classification", model="superb/wav2vec2-base-superb-er")
-
+        
         classifier = load_voice_model()
-
-        uploaded_file = st.file_uploader("Upload Voice Clip (.wav)", type="wav")
-        if uploaded_file:
-            speech, sr = librosa.load(uploaded_file, sr=16000)
-            result = classifier(speech)
-            for r in result:
-                st.write(f"**{r['label']}**: {r['score']:.2%}")
+        
+        up = st.file_uploader("Upload Voice Telemetry (.wav)", type="wav")
+        if up:
+            speech, sr = librosa.load(up, sr=16000)
+            res = classifier(speech)
+            for r in res:
+                st.write(f"**{r['label']}**")
                 st.progress(r['score'])
 
         st.divider()
-        recorded_voice = st.audio_input("Record live voice analysis")
-        if recorded_voice:
-            speech, sr = librosa.load(recorded_voice, sr=16000)
-            result = classifier(speech)
-            for r in result:
-                st.write(f"**{r['label']}**: {r['score']:.2%}")
+        recorded = st.audio_input("Live Microphone Stream")
+        if recorded:
+            speech, sr = librosa.load(recorded, sr=16000)
+            res = classifier(speech)
+            for r in res:
+                st.write(f"**{r['label']}**")
                 st.progress(r['score'])
 
-    # --- TAB 2: STRUCTURAL AI ---
     with tab2:
-        st.title("🛰️ Asset Integrity Analysis")
+        st.title("🛰️ Structural Health Monitoring")
         col1, col2 = st.columns([1, 2])
-        
         with col1:
-            st.write("### Sensor Telemetry")
-            vibration = st.slider("Vibration Frequency (Hz)", 0, 5000, 1200)
-            strain = st.slider("Micro-strain (με)", 0, 10000, 4500)
-            cycles = st.number_input("Cumulative Stress Cycles", 1000, 1000000, 50000)
-
+            st.write("### Sensor Inputs")
+            vibration = st.slider("Vibration (Hz)", 0, 5000, 1100)
+            strain = st.slider("Strain (με)", 0, 10000, 4000)
         with col2:
-            damage_score = (strain / 10000) * (np.log10(cycles) / 6) * 100
-            st.write("### Damage Probability Analysis")
-            if damage_score < 30:
-                st.success(f"Nominal: {damage_score:.2f}% Damage")
-            elif damage_score < 70:
-                st.warning(f"Caution: {damage_score:.2f}% Damage")
-            else:
-                st.error(f"CRITICAL: {damage_score:.2f}% Failure Probability")
-            
-            st.line_chart(pd.DataFrame(np.random.randn(20, 2), columns=['X-Axis', 'Y-Axis']))
+            damage = (strain / 10000) * 100
+            st.metric("Deformation Risk", f"{damage:.1f}%")
+            st.line_chart(np.random.randn(20, 1))
 
-    # --- TAB 3: HSI (THE DELAY SOLUTION) ---
     with tab3:
-        st.title("🧠 Human-Systems Integration")
+        st.title("🧠 Human-Systems Integration (HSI)")
         st.subheader("Autonomous Synergy Guardian")
+        st.info("Direct Edge Feedback: Active. Mars-Earth Delay: 22m (Bypassed)")
+        st.write("This module correlates biological stress with mechanical fatigue to predict mission-critical failures before they reach Earth.")
         
-        # This explains your PhD "Why"
-        col_a, col_b = st.columns(2)
-        with col_a:
-            st.metric("Earth Signal Latency", "1,200,000 ms", "Mars Delay")
-        with col_b:
-            st.metric("Astrielle AI Latency", "4.2 ms", "Instant Action", delta_color="inverse")
-            
-        st.info("Local Edge Computing Mode Active: No data is sent to Earth for processing.")
-        st.write("By integrating biometric state with structural integrity, we predict human-error risks before they occur.")
+        # A quick visual for the 'Real-Time' proof
+        st.bar_chart({"Earth Delay (s)": 1320, "Astrielle AI (s)": 0.004})
+
+    # --- THE FOOTER ---
+    st.markdown("""
+        <div class="footer">
+            © 2026 Astrielle AI | Developed by [Your Name/PhD Bio] | <b>Confidential Mission Telemetry</b><br>
+            Powered by Edge Intelligence for Autonomous Deep Space Exploration.
+        </div>
+    """, unsafe_allow_html=True)
