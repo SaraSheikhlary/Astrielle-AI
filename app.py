@@ -4,21 +4,10 @@ import numpy as np
 from transformers import pipeline
 from PIL import Image
 
-# --- 1. SETTINGS ---
-try:
-    favicon = Image.open("astrielle_favicon_square.png")
-    logo = Image.open("astrielle_logo_full.png")
-except:
-    favicon = None
-    logo = None
+# --- 1. CORE CONFIG ---
+st.set_page_config(page_title="ASTRIELLE AI", layout="wide")
 
-st.set_page_config(page_title="ASTRIELLE AI", page_icon=favicon, layout="wide")
-
-# --- 2. THE SWITCH LOGIC ---
-if 'entered' not in st.session_state:
-    st.session_state.entered = False
-
-# Force Dark Mode CSS
+# Force Dark Mode CSS immediately
 st.markdown("""
     <style>
     [data-theme="light"], [data-theme="dark"], .stApp {
@@ -33,18 +22,32 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# --- 2. SIDEBAR NAVIGATION ---
+with st.sidebar:
+    st.title("🛰️ ASTRIELLE AI")
+    st.write("Autonomous HSI Edge Intelligence")
+    st.divider()
+    page = st.radio("Navigation", ["Landing Page", "Vocal Biomarkers", "Structural Health", "Mission Summary"])
+    st.divider()
+    st.info("System: Edge Computing\nLatency: 0.004ms")
+
 # --- 3. PAGE ROUTING ---
-if not st.session_state.entered:
-    # --- LANDING PAGE ---
-    st.markdown("<br><br><br>", unsafe_allow_html=True)
-    col_l, col_c, col_r = st.columns([1, 2, 1])
-    with col_c:
-        st.title("🛰️ ASTRIELLE AI")
-        st.subheader("Autonomous Edge Intelligence")
-        st.write("Deep Space Human-Systems Integration.")
-        if st.button("INITIALIZE MISSION CONTROL", use_container_width=True):
-            st.session_state.entered = True
-            st.rerun() # This forces the app to 'bite' the next page
-else:
-    # --- MAIN DASHBOARD ---
-    with st.sidebar
+if page == "Landing Page":
+    st.title("WELCOME TO ASTRIELLE AI")
+    st.subheader("Deep Space Human-Systems Integration")
+    st.write("Bypassing the 22-minute Mars-Earth delay with localized AI diagnostics.")
+    if st.button("Access Command Center"):
+        st.info("Select a module from the sidebar to begin.")
+
+elif page == "Vocal Biomarkers":
+    st.header("🎙️ Vocal Biomarker Monitor")
+    st.write("Analyzing telemetry for mission-critical stressors.")
+    up = st.file_uploader("Upload Audio (.wav)", type=["wav"])
+    live = st.audio_input("Live Audio Stream")
+    if up or live:
+        st.success("Data stream active. Analyzing...")
+
+elif page == "Structural Health":
+    st.header("🛰️ Structural Health")
+    vibe = st.slider("Vibration (Hz)", 0, 5000, 1100)
+    st.line_chart(np.random.randn(
