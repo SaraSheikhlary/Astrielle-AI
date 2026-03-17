@@ -7,11 +7,11 @@ from transformers import pipeline
 # --- 1. CONFIGURATION ---
 st.set_page_config(layout="wide", page_title="Astrielle AI | HSI")
 
-# --- 2. SESSION STATE (The Memory) ---
+# --- 2. SESSION STATE ---
 if 'entered' not in st.session_state:
     st.session_state.entered = False
 
-# --- 3. THE SPLASH SCREEN (Landing Page) ---
+# --- 3. THE SPLASH SCREEN ---
 if not st.session_state.entered:
     st.markdown("""
         <style>
@@ -46,9 +46,8 @@ if not st.session_state.entered:
         st.rerun()
     st.stop() 
 
-# --- 4. THE MAIN DASHBOARD (Visible only after 'Enter') ---
+# --- 4. THE MAIN DASHBOARD ---
 else:
-    # Sidebar for Reset & Edge Info
     with st.sidebar:
         st.title("🛰️ Command Center")
         if st.button("Log Out / Reset View"):
@@ -62,13 +61,82 @@ else:
     # THEME GUARD CSS (Adaptive Light/Dark Mode)
     st.markdown("""
         <style>
-            /* BASE BACKGROUND */
             .stApp {
                 background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 background-attachment: fixed;
             }
-
-            /* LIGHT MODE: White tint over stars + Black text */
             [data-theme="light"] .stApp {
-                background-image: linear-gradient(rgba(255,
+                background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
+                                  url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
+            }
+            [data-theme="dark"] .stApp {
+                background-image: linear-gradient(rgba(14, 17, 23, 0.85), rgba(14, 17, 23, 0.85)), 
+                                  url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
+            }
+            .stTabs [data-baseweb="tab-panel"] {
+                padding: 30px; border-radius: 20px; backdrop-filter: blur(20px);
+                border: 1px solid rgba(128, 128, 128, 0.2); margin-top: 20px;
+            }
+            [data-theme="light"] .stTabs [data-baseweb="tab-panel"] { background: rgba(255, 255, 255, 0.95); }
+            [data-theme="dark"] .stTabs [data-baseweb="tab-panel"] { background: rgba(30, 30, 30, 0.75); }
+            
+            h1, h2, h3, p, span, label { color: var(--text-color) !important; }
+
+            .footer {
+                position: fixed; left: 0; bottom: 0; width: 100%;
+                text-align: center; font-size: 0.8em; padding: 12px 0; z-index: 999;
+            }
+            [data-theme="light"] .footer { background: white; color: black; border-top: 1px solid #ddd; }
+            [data-theme="dark"] .footer { background: black; color: white; border-top: 1px solid #333; }
+        </style>
+    """, unsafe_allow_html=True)
+
+    tab1, tab2, tab3 = st.tabs(["🎙️ Vocal Biomarkers", "🛰️ Structural Health", "🧠 Human-Systems Integration"])
+
+    with tab1:
+        st.title("✨ Vocal Biomarker Monitor")
+        @st.cache_resource
+        def load_voice_model():
+            return pipeline("audio-classification", model="superb/wav2vec2-base-superb-er")
+        
+        classifier = load_voice_model()
+        up = st.file_uploader("Upload Telemetry (.wav)", type="wav")
+        if up:
+            speech, sr = librosa.load(up, sr=16000)
+            res = classifier(speech)
+            for r in res:
+                st.write(f"**{r['label']}**")
+                st.progress(r['score'])
+
+        st.divider()
+        rec = st.audio_input("Live Stream")
+        if rec:
+            speech, sr = librosa.load(rec, sr=16000)
+            res = classifier(speech)
+            for r in res:
+                st.write(f"**{r['label']}**")
+                st.progress(r['score'])
+
+    with tab2:
+        st.title("🛰️ Structural Health Monitoring")
+        c1, c2 = st.columns([1, 2])
+        with c1:
+            vibe = st.slider("Vibration (Hz)", 0, 5000, 1100)
+            strn = st.slider("Strain (με)", 0, 10000, 4000)
+        with c2:
+            dmg = (strn / 10000) * 100
+            st.metric("Deformation Risk", f"{dmg:.1f}%")
+            st.line_chart(np.random.randn(20, 1))
+
+    with tab3:
+        st.title("🧠 Human-Systems Integration")
+        st.info("Direct Edge Feedback: Active. Mars-Earth Delay: 22m (Bypassed)")
+        st.bar_chart({"Earth Delay (s)": 1320, "Astrielle AI (s)": 0.004})
+
+    st.markdown("""
+        <div class="footer">
+            © 2026 Astrielle AI | <b>Confidential Mission Telemetry</b> | 
+            Edge Intelligence for Deep Space Exploration.
+        </div>
+    """, unsafe_allow_html=True)
