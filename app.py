@@ -3,9 +3,20 @@ import librosa
 import pandas as pd
 import numpy as np
 from transformers import pipeline
+from PIL import Image # <-- Added this to load your logos!
 
 # --- 1. CONFIGURATION ---
-st.set_page_config(layout="wide", page_title="Astrielle AI | HSI")
+# Load your new logo images here (make sure the files are in the same folder!)
+sidebar_logo_full = Image.open("astrielle_logo_full.png")
+favicon_icon_square = Image.open("astrielle_favicon_square.png")
+
+# Updated to include your new tab icon
+st.set_page_config(
+    layout="wide", 
+    page_title="Astrielle AI | HSI",
+    page_icon=favicon_icon_square, 
+    initial_sidebar_state="expanded"
+)
 
 # --- 2. SESSION STATE ---
 if 'entered' not in st.session_state:
@@ -49,6 +60,21 @@ if not st.session_state.entered:
 # --- 4. THE MAIN DASHBOARD ---
 else:
     with st.sidebar:
+        # --- NEW LOGO ADDED HERE ---
+        st.image(sidebar_logo_full, use_container_width=True)
+        st.markdown("""
+            <div style='text-align: center; color: #4F8BF9; font-size: 20px; font-weight: bold;'>
+                ASTRIELLE AI
+                <br>
+                <span style='font-size: 14px; font-weight: normal; color: #AFAFAF;'>
+                Autonomous HSI Edge Intelligence
+                </span>
+            </div>
+            <br>
+        """, unsafe_allow_html=True)
+        st.divider()
+        # ---------------------------
+
         st.title("🛰️ Command Center")
         if st.button("Log Out / Reset View"):
             st.session_state.entered = False
@@ -167,10 +193,4 @@ else:
             st.write("The AI is tuned for **Zero False Negatives**, ensuring no structural crack or crew health risk goes unnoticed.")
             st.success("Current Autonomous Safety Index: 98.4%")
 
-    # RESTORED YOUR ORIGINAL FOOTER
-    st.markdown("""
-        <div class="footer">
-            © 2026 Astrielle AI | <b>Confidential Mission Telemetry</b> | 
-            Edge Intelligence for Deep Space Exploration.
-        </div>
-    """, unsafe_allow_html=True)
+    # RESTORED YOUR ORIGINAL FOOT
