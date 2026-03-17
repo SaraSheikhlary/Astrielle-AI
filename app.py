@@ -102,8 +102,8 @@ else:
         classifier = load_voice_model()
         
         # Mappings for icons AND full words
-        emo_icons = {"ang": "😡", "sad": "😢", "hap": "😊", "neu": "😐", "fea": "😨", "sur": "😲"}
-        emo_names = {"ang": "Angry", "sad": "Sad", "hap": "Happy", "neu": "Neutral", "fea": "Fear", "sur": "Surprise"}
+        emo_icons = {"ang": "😬", "sad": "😢", "hap": "😊", "neu": "😐", "fea": "😨", "sur": "😲"}
+        emo_names = {"ang": "Angry (high stress)", "sad": "Sad", "hap": "Happy", "neu": "Neutral", "fea": "Fear", "sur": "Surprise"}
 
         # Logic for both Upload and Record
         source = st.file_uploader("Upload Telemetry (.wav)", type="wav")
