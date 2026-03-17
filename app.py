@@ -4,95 +4,81 @@ import pandas as pd
 import numpy as np
 from transformers import pipeline
 
-# --- 1. CONFIGURATION ---
-st.set_page_config(layout="wide", page_title="Astrielle AI | HSI")
+# --- 1. SETTINGS & AUTHENTICATION STATE ---
+st.set_page_config(layout="wide", page_title="Astrielle AI | Mission Control")
 
-# --- 2. SESSION STATE ---
-if 'entered' not in st.session_state:
-    st.session_state.entered = False
+if 'authenticated' not in st.session_state:
+    st.session_state.authenticated = False
 
-# --- 3. THE SPLASH SCREEN ---
-if not st.session_state.entered:
+# --- 2. LOGIN & LANDING PAGE ---
+if not st.session_state.authenticated:
     st.markdown("""
         <style>
             .stApp {
-                background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 display: flex; align-items: center; justify-content: center;
             }
-            .landing-card {
-                text-align: center; color: white; padding: 60px;
-                background: rgba(255, 255, 255, 0.05); 
-                border-radius: 30px;
-                backdrop-filter: blur(15px); 
-                border: 1px solid rgba(255,255,255,0.1);
+            .auth-card {
+                text-align: center; color: white; padding: 50px;
+                background: rgba(0, 0, 0, 0.4); border-radius: 30px;
+                backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1);
             }
-            .title-text { font-size: 85px; font-weight: 800; letter-spacing: 12px; margin-bottom: 0px; }
-            .subtitle-text { font-size: 22px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 30px; }
+            .title-text { font-size: 60px; font-weight: 800; letter-spacing: 10px; margin-bottom: 0px; }
         </style>
-        <div class="landing-card">
-            <div class="title-text">ASTRIELLE</div>
-            <div class="subtitle-text">Autonomous Edge Intelligence</div>
-            <p style="max-width:600px; margin:0 auto; font-size:18px; opacity:0.8;">
-                Advanced <b>Human-Systems Integration</b> for Deep Space. 
-                Localized AI diagnostics to bypass the 20-minute Mars-Earth communication lag.
-            </p>
-        </div>
     """, unsafe_allow_html=True)
 
-    if st.button("INITIALIZE MISSION CONTROL", use_container_width=True):
-        st.session_state.entered = True
-        st.rerun()
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        st.markdown('<div class="auth-card">', unsafe_allow_html=True)
+        st.markdown('<div class="title-text">ASTRIELLE</div>', unsafe_allow_html=True)
+        st.write("### Autonomous Edge Intelligence")
+        
+        tab_login, tab_signup = st.tabs(["Login", "Create Mission Account"])
+        
+        with tab_login:
+            user = st.text_input("Astronaut ID")
+            pw = st.text_input("Access Key", type="password")
+            if st.button("INITIALIZE UPLINK", use_container_width=True):
+                st.session_state.authenticated = True
+                st.rerun()
+        
+        with tab_signup:
+            st.text_input("Full Name")
+            st.text_input("Email")
+            st.selectbox("Affiliation", ["NASA", "SpaceX", "ESA", "Private Sector"])
+            st.button("Request Credentials")
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     st.stop() 
 
-# --- 4. THE MAIN DASHBOARD ---
+# --- 3. MAIN DASHBOARD ---
 else:
     with st.sidebar:
-        st.title("🛰️ Command Center")
-        if st.button("Log Out / Reset View"):
-            st.session_state.entered = False
+        st.title("🛰️ Command")
+        st.write("User: **Astro_01**")
+        if st.button("🔴 TERMINATE SESSION"):
+            st.session_state.authenticated = False
             st.rerun()
         st.divider()
-        st.write("**System:** Edge Computing")
-        st.write("**Local Latency:** 0.004ms")
-        st.write("**Earth Sync:** 22m Delay (Bypassed)")
+        st.info("System Status: **Edge-Autonomous**")
 
-    # THEME GUARD CSS (Adaptive Light/Dark Mode)
+    # Muted Background for Dashboard
     st.markdown("""
         <style>
             .stApp {
-                background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
+                background: linear-gradient(rgba(10,10,15,0.94), rgba(10,10,15,0.94)), 
+                            url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
-                background-attachment: fixed;
-            }
-            [data-theme="light"] .stApp {
-                background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
-                                  url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
-            }
-            [data-theme="dark"] .stApp {
-                background-image: linear-gradient(rgba(14, 17, 23, 0.85), rgba(14, 17, 23, 0.85)), 
-                                  url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
             }
             .stTabs [data-baseweb="tab-panel"] {
-                padding: 30px; border-radius: 20px; backdrop-filter: blur(20px);
-                border: 1px solid rgba(128, 128, 128, 0.2); margin-top: 20px;
+                background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 20px;
             }
-            [data-theme="light"] .stTabs [data-baseweb="tab-panel"] { background: rgba(255, 255, 255, 0.95); }
-            [data-theme="dark"] .stTabs [data-baseweb="tab-panel"] { background: rgba(30, 30, 30, 0.75); }
-            
-            h1, h2, h3, p, span, label { color: var(--text-color) !important; }
-
-            .footer {
-                position: fixed; left: 0; bottom: 0; width: 100%;
-                text-align: center; font-size: 0.8em; padding: 12px 0; z-index: 999;
-            }
-            [data-theme="light"] .footer { background: white; color: black; border-top: 1px solid #ddd; }
-            [data-theme="dark"] .footer { background: black; color: white; border-top: 1px solid #333; }
         </style>
     """, unsafe_allow_html=True)
 
-    tab1, tab2, tab3 = st.tabs(["🎙️ Vocal Biomarkers", "🛰️ Structural Health", "🧠 Human-Systems Integration"])
+    tab1, tab2, tab3, tab4 = st.tabs(["🎙️ Vocal AI", "🛰️ Structural AI", "🧠 HSI Synergy", "📑 Mission Summary"])
 
     with tab1:
         st.title("✨ Vocal Biomarker Monitor")
@@ -109,34 +95,9 @@ else:
                 st.write(f"**{r['label']}**")
                 st.progress(r['score'])
 
-        st.divider()
-        rec = st.audio_input("Live Stream")
-        if rec:
-            speech, sr = librosa.load(rec, sr=16000)
-            res = classifier(speech)
-            for r in res:
-                st.write(f"**{r['label']}**")
-                st.progress(r['score'])
-
     with tab2:
         st.title("🛰️ Structural Health Monitoring")
         c1, c2 = st.columns([1, 2])
         with c1:
             vibe = st.slider("Vibration (Hz)", 0, 5000, 1100)
-            strn = st.slider("Strain (με)", 0, 10000, 4000)
-        with c2:
-            dmg = (strn / 10000) * 100
-            st.metric("Deformation Risk", f"{dmg:.1f}%")
-            st.line_chart(np.random.randn(20, 1))
-
-    with tab3:
-        st.title("🧠 Human-Systems Integration")
-        st.info("Direct Edge Feedback: Active. Mars-Earth Delay: 22m (Bypassed)")
-        st.bar_chart({"Earth Delay (s)": 1320, "Astrielle AI (s)": 0.004})
-
-    st.markdown("""
-        <div class="footer">
-            © 2026 Astrielle AI | <b>Confidential Mission Telemetry</b> | 
-            Edge Intelligence for Deep Space Exploration.
-        </div>
-    """, unsafe_allow_html=True)
+            strn = st
