@@ -4,10 +4,10 @@ import numpy as np
 from transformers import pipeline
 from PIL import Image
 
-# --- 1. CORE CONFIG ---
+# --- 1. SETUP ---
 st.set_page_config(page_title="ASTRIELLE AI", layout="wide")
 
-# Force Dark Mode CSS immediately
+# Force Dark Mode CSS
 st.markdown("""
     <style>
     [data-theme="light"], [data-theme="dark"], .stApp {
@@ -22,32 +22,27 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. SIDEBAR NAVIGATION ---
+# --- 2. NAVIGATION ---
 with st.sidebar:
     st.title("🛰️ ASTRIELLE AI")
-    st.write("Autonomous HSI Edge Intelligence")
+    st.write("Edge Intelligence Dashboard")
     st.divider()
-    page = st.radio("Navigation", ["Landing Page", "Vocal Biomarkers", "Structural Health", "Mission Summary"])
+    # This radio button replaces the landing page button to ensure it always 'bites'
+    choice = st.radio("Mission Control", ["Home", "Vocal Biomarkers", "Structural Health", "Summary"])
     st.divider()
-    st.info("System: Edge Computing\nLatency: 0.004ms")
+    st.caption("Status: Local Edge Active")
 
-# --- 3. PAGE ROUTING ---
-if page == "Landing Page":
-    st.title("WELCOME TO ASTRIELLE AI")
-    st.subheader("Deep Space Human-Systems Integration")
-    st.write("Bypassing the 22-minute Mars-Earth delay with localized AI diagnostics.")
-    if st.button("Access Command Center"):
-        st.info("Select a module from the sidebar to begin.")
+# --- 3. PAGE LOGIC ---
+if choice == "Home":
+    st.title("ASTRIELLE AI")
+    st.subheader("Autonomous Human-Systems Integration")
+    st.write("Localized AI diagnostics for Deep Space missions.")
+    st.info("Please select a module from the sidebar to begin analysis.")
 
-elif page == "Vocal Biomarkers":
+elif choice == "Vocal Biomarkers":
     st.header("🎙️ Vocal Biomarker Monitor")
-    st.write("Analyzing telemetry for mission-critical stressors.")
-    up = st.file_uploader("Upload Audio (.wav)", type=["wav"])
-    live = st.audio_input("Live Audio Stream")
+    st.write("Upload telemetry or use the live feed to analyze psychological stressors.")
+    up = st.file_uploader("Upload .WAV", type=["wav"])
+    live = st.audio_input("Live Stream")
     if up or live:
-        st.success("Data stream active. Analyzing...")
-
-elif page == "Structural Health":
-    st.header("🛰️ Structural Health")
-    vibe = st.slider("Vibration (Hz)", 0, 5000, 1100)
-    st.line_chart(np.random.randn(
+        st.success("Data
