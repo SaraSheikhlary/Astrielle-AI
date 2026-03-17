@@ -59,11 +59,40 @@ else:
         st.write("**Latency:** 0.004ms (Local)")
         st.write("**Earth Sync:** 22m Delay (Bypassed)")
 
-    # Main CSS for Dashboard & Footer
+    # Main CSS for Dashboard & Footer    
     st.markdown("""
         <style>
-            [data-theme="light"] { color: #000000 !important; }
-            [data-theme="dark"] { color: #ffffff !important; }
+            /* 1. This uses the system's own text color variable */
+            .stApp {
+                color: var(--text-color);
+                background: linear-gradient(rgba(14, 17, 23, 0.8), rgba(14, 17, 23, 0.8)), 
+                            url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
+                background-size: cover;
+            }
+
+            /* 2. Forces headings to be crisp in both modes */
+            h1, h2, h3, p {
+                color: var(--text-color) !important;
+            }
+
+            /* 3. Glass-morphism for Tab Content (Makes it readable) */
+            .stTabs [data-baseweb="tab-panel"] {
+                background: rgba(255, 255, 255, 0.05);
+                padding: 20px;
+                border-radius: 15px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* 4. The Footer Styling */
+            .footer {
+                position: fixed; left: 0; bottom: 0; width: 100%;
+                background-color: rgba(0, 0, 0, 0.8); 
+                color: #aaa; text-align: center;
+                font-size: 0.8em; padding: 10px 0; z-index: 999;
+            }
+        </style>
+    """, unsafe_allow_html=True)
             .stApp {
                 background: linear-gradient(rgba(14, 17, 23, 0.9), rgba(14, 17, 23, 0.9)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
