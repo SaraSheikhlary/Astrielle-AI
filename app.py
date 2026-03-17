@@ -3,9 +3,20 @@ import librosa
 import pandas as pd
 import numpy as np
 from transformers import pipeline
+from PIL import Image # <-- Added this to load your logos!
 
 # --- 1. CONFIGURATION ---
-st.set_page_config(layout="wide", page_title="Astrielle AI | HSI")
+# Load your new logo images here (make sure the files are in the same folder!)
+sidebar_logo_full = Image.open("astrielle_logo_full.png")
+favicon_icon_square = Image.open("astrielle_favicon_square.png")
+
+# Updated to include your new tab icon
+st.set_page_config(
+    layout="wide", 
+    page_title="Astrielle AI | HSI",
+    page_icon=favicon_icon_square, 
+    initial_sidebar_state="expanded"
+)
 
 # --- 2. SESSION STATE ---
 if 'entered' not in st.session_state:
@@ -49,6 +60,21 @@ if not st.session_state.entered:
 # --- 4. THE MAIN DASHBOARD ---
 else:
     with st.sidebar:
+        # --- NEW LOGO ADDED HERE ---
+        st.image(sidebar_logo_full, use_container_width=True)
+        st.markdown("""
+            <div style='text-align: center; color: #4F8BF9; font-size: 20px; font-weight: bold;'>
+                ASTRIELLE AI
+                <br>
+                <span style='font-size: 14px; font-weight: normal; color: #AFAFAF;'>
+                Autonomous HSI Edge Intelligence
+                </span>
+            </div>
+            <br>
+        """, unsafe_allow_html=True)
+        st.divider()
+        # ---------------------------
+
         st.title("🛰️ Command Center")
         if st.button("Log Out / Reset View"):
             st.session_state.entered = False
@@ -58,7 +84,7 @@ else:
         st.write("**Local Latency:** 0.004ms")
         st.write("**Earth Sync:** 22m Delay (Bypassed)")
 
-    # THEME GUARD CSS
+    # THEME GUARD CSS 
     st.markdown("""
         <style>
             .stApp {
@@ -90,42 +116,38 @@ else:
         </style>
     """, unsafe_allow_html=True)
 
-    tab1, tab2, tab3, tab4 = st.tabs(
-        ["🎙️ Vocal Biomarkers", "🛰️ Structural Health", "🧠 Human-Systems Integration", "📑 Summary"])
+    tab1, tab2, tab3, tab4 = st.tabs(["🎙️ Vocal Biomarkers", "🛰️ Structural Health", "🧠 Human-Systems Integration", "📑 Summary"])
 
     with tab1:
         st.title("✨ Vocal Biomarker Monitor")
-
 
         @st.cache_resource
         def load_voice_model():
             return pipeline("audio-classification", model="superb/wav2vec2-base-superb-er")
 
-
         classifier = load_voice_model()
-
+        
         # Mappings for icons AND full words
         emo_icons = {"ang": "😬", "sad": "😢", "hap": "😊", "neu": "😐", "fea": "😨", "sur": "😲"}
-        emo_names = {"ang": "Angry (high stress)", "sad": "Sad", "hap": "Happy", "neu": "Neutral", "fea": "Fear",
-                     "sur": "Surprise"}
+        emo_names = {"ang": "Angry (high stress)", "sad": "Sad", "hap": "Happy", "neu": "Neutral", "fea": "Fear", "sur": "Surprise"}
 
         # Logic for both Upload and Record
         source = st.file_uploader("Upload Telemetry (.wav)", type="wav")
         rec = st.audio_input("Live Stream")
-
+        
         active_file = source if source is not None else rec
 
         if active_file:
             speech, sr = librosa.load(active_file, sr=16000)
             results = classifier(speech)
-
+            
             top_emo = results[0]['label'].lower()
-
+            
             # Translates "hap" to "Happy"
             full_word = emo_names.get(top_emo, top_emo.upper())
-
+            
             st.subheader(f"AI Detected: {full_word.upper()} {emo_icons.get(top_emo, '🛰️')}")
-
+            
             # AI Feedback block
             if top_emo in ["ang", "fea"]:
                 st.error("⚠️ AI ALERT: Stress detected. Suggest immediate rest cycle.")
@@ -156,22 +178,19 @@ else:
         st.title("🧠 Human-Systems Integration")
         st.info("Direct Edge Feedback: Active. Mars-Earth Delay: 22m (Bypassed)")
         st.bar_chart({"Earth Delay (s)": 1320, "Astrielle AI (s)": 0.004})
-
+        
     with tab4:
         st.title("📑 Mission Intelligence Summary")
         col_l, col_r = st.columns(2)
         with col_l:
             st.subheader("The Problem: Deep Space Latency")
-            st.write(
-                "Current Mars missions face a **22-minute delay** for signals to reach Earth. In an emergency, waiting for ground control is not an option.")
+            st.write("Current Mars missions face a **22-minute delay** for signals to reach Earth. In an emergency, waiting for ground control is not an option.")
             st.subheader("The Solution: Astrielle AI")
-            st.write(
-                "We move the intelligence to the **Edge**. By analyzing hull strain and crew biomarkers locally, we prevent mission failure in milliseconds.")
+            st.write("We move the intelligence to the **Edge**. By analyzing hull strain and crew biomarkers locally, we prevent mission failure in milliseconds.")
         with col_r:
             st.subheader("Reliability Metrics")
             st.info("ROC-AUC Score: 0.98 (Mission Critical Grade)")
-            st.write(
-                "The AI is tuned for **Zero False Negatives**, ensuring no structural crack or crew health risk goes unnoticed.")
+            st.write("The AI is tuned for **Zero False Negatives**, ensuring no structural crack or crew health risk goes unnoticed.")
             st.success("Current Autonomous Safety Index: 98.4%")
 
     # RESTORED YOUR ORIGINAL FOOTER
