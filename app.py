@@ -19,17 +19,14 @@ st.set_page_config(
 # --- 1.5 SEO & META TAGS ---
 st.markdown("""
     <style>
-        /* Hidden SEO text for search engine crawlers */
         .seo-hide { display: none; }
     </style>
     <div class="seo-hide">
         <h1>Astrielle AI - Deep Space Edge Intelligence</h1>
         <h2>Autonomous Human-Systems Integration for Mars Missions</h2>
-        <p>Astrielle AI provides localized AI diagnostics, vocal biomarker monitoring, and structural health tracking to bypass the 20-minute Mars-Earth communication lag.</p>
+        <p>Astrielle AI provides localized AI diagnostics and structural health tracking.</p>
     </div>
-    <meta name="description" content="Astrielle AI: Autonomous Edge Intelligence and Human-Systems Integration for Deep Space Exploration.">
-    <meta name="keywords" content="Astrielle AI, Space Technology, Edge Computing, Human-Systems Integration, Vocal Biomarkers, Mars Mission">
-    <meta name="author" content="Astrielle AI">
+    <meta name="description" content="Astrielle AI: Autonomous Edge Intelligence for Deep Space Exploration.">
 """, unsafe_allow_html=True)
 
 
@@ -50,4 +47,11 @@ if not st.session_state.entered:
             .landing-card {
                 text-align: center; color: white; padding: 60px;
                 background: rgba(255, 255, 255, 0.05); 
-                border-radius: 30px
+                border-radius: 30px;
+                backdrop-filter: blur(15px); 
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+            .title-text { font-size: 85px; font-weight: 800; letter-spacing: 12px; margin-bottom: 0px; }
+            .subtitle-text { font-size: 22px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 30px; }
+        </style>
+        <div class="landing-card">
