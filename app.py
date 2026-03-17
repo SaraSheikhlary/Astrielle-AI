@@ -11,7 +11,7 @@ st.set_page_config(layout="wide", page_title="Astrielle AI | HSI")
 if 'entered' not in st.session_state:
     st.session_state.entered = False
 
-# --- 3. THE SPLASH SCREEN (Restored to your original) ---
+# --- 3. THE SPLASH SCREEN ---
 if not st.session_state.entered:
     st.markdown("""
         <style>
@@ -56,4 +56,6 @@ else:
         st.divider()
         st.write("**System:** Edge Computing")
         st.write("**Local Latency:** 0.004ms")
-        st.write("**Earth Sync:** 22m Delay (
+        st.write("**Earth Sync:** 22m Delay (Bypassed)")
+
+    # THE
