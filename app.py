@@ -11,31 +11,30 @@ st.set_page_config(layout="wide", page_title="Astrielle AI | HSI")
 if 'entered' not in st.session_state:
     st.session_state.entered = False
 
-# --- 3. THE SPLASH SCREEN (Vibrant & High Contrast) ---
+# --- 3. THE SPLASH SCREEN (Vibrant & Colorful) ---
 if not st.session_state.entered:
     st.markdown("""
         <style>
             .stApp {
-                /* High color saturation, lower overlay darkness for the landing */
-                background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 display: flex; align-items: center; justify-content: center;
             }
             .landing-card {
                 text-align: center; color: white; padding: 60px;
-                background: rgba(0, 0, 0, 0.3); 
+                background: rgba(0, 0, 0, 0.2); 
                 border-radius: 30px;
-                backdrop-filter: blur(10px); 
+                backdrop-filter: blur(8px); 
                 border: 1px solid rgba(255,255,255,0.2);
             }
-            .title-text { font-size: 85px; font-weight: 800; letter-spacing: 12px; margin-bottom: 0px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-            .subtitle-text { font-size: 22px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 30px; }
+            .title-text { font-size: 85px; font-weight: 800; letter-spacing: 12px; margin-bottom: 0px; text-shadow: 2px 2px 15px rgba(0,0,0,0.5); }
+            .subtitle-text { font-size: 22px; color: #00f2ff; letter-spacing: 3px; margin-bottom: 30px; text-transform: uppercase; }
         </style>
         <div class="landing-card">
             <div class="title-text">ASTRIELLE</div>
             <div class="subtitle-text">Autonomous Edge Intelligence</div>
-            <p style="max-width:600px; margin:0 auto; font-size:18px; opacity:0.9;">
+            <p style="max-width:600px; margin:0 auto; font-size:18px; opacity:1.0; font-weight:500;">
                 Advanced <b>Human-Systems Integration</b> for Deep Space. 
                 Localized AI diagnostics to bypass the 20-minute communication lag.
             </p>
@@ -47,7 +46,7 @@ if not st.session_state.entered:
         st.rerun()
     st.stop() 
 
-# --- 4. THE MAIN DASHBOARD (Darker & Muted) ---
+# --- 4. THE MAIN DASHBOARD (Dark & Muted) ---
 else:
     with st.sidebar:
         st.title("🛰️ Command Center")
@@ -55,18 +54,12 @@ else:
             st.session_state.entered = False
             st.rerun()
         st.divider()
-        st.write("**System:** Edge Computing")
+        st.write("**System Status:** Nominal")
         st.write("**Local Latency:** 0.004ms")
 
-    # DASHBOARD CSS (Deep Dark Overlay to reduce color "noise")
+    # DASHBOARD CSS
     st.markdown("""
         <style>
             .stApp {
-                /* Heavy dark overlay (0.92) to keep the background muted */
                 background: linear-gradient(rgba(10, 10, 15, 0.92), rgba(10, 10, 15, 0.92)), 
-                            url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
-                background-size: cover;
-                background-attachment: fixed;
-            }
-            
-            /* Logic for Light/Dark mode text
+                            url('
