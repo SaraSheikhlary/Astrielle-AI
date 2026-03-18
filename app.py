@@ -29,7 +29,6 @@ if not st.session_state.entered:
     st.markdown("""
         <style>
             .stApp {
-                /* Lessened the dark fade here so the splash screen is more vibrant */
                 background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
@@ -65,14 +64,12 @@ else:
     st.markdown("""
         <style>
             .stApp {
-                /* Changed to 0.15 opacity so 85% of the original image color comes through! */
                 background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), 
                             url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 background-attachment: fixed;
             }
             .stTabs [data-baseweb="tab-panel"] {
-                /* Made the glass panels slightly darker/blurrier to protect text readability */
                 background: rgba(15, 15, 15, 0.75);
                 padding: 30px; border-radius: 20px; backdrop-filter: blur(12px);
                 border: 1px solid rgba(255, 255, 255, 0.2); margin-top: 20px;
@@ -201,17 +198,37 @@ else:
         st.info("Direct Edge Feedback: Active. Mars-Earth Delay: 22m (Bypassed)")
         st.bar_chart({"Earth Delay (s)": 1320, "Astrielle AI (s)": 0.004})
         
-    # --- TAB 5: SUMMARY ---
+    # --- TAB 5: COMPREHENSIVE SUMMARY ---
     with tab5:
         st.title("📑 Mission Intelligence Summary")
-        col_l, col_r = st.columns(2)
+        st.markdown("""
+            **ASTRIELLE AI** is designed to solve the critical communication latency in deep space exploration. 
+            Relying on Earth-based mission control is unviable when facing a 44-minute round-trip signal delay to Mars. 
+            This system brings autonomous, localized intelligence directly to the habitat edge.
+        """)
+        
+        st.divider()
+        
+        col_l, col_m, col_r = st.columns(3)
         with col_l:
-            st.subheader("The Problem: Deep Space Latency")
-            st.write("Current Mars missions face a **22-minute delay** for signals to reach Earth. In an emergency, waiting for ground control is not an option.")
+            st.subheader("📡 The Latency Problem")
+            st.write("Current Mars missions face a **22-minute delay** for signals to reach Earth. In a localized emergency, waiting for ground control is not an option.")
+        with col_m:
+            st.subheader("🧠 Core Technologies")
+            st.markdown("- **Vocal Biomarkers:** Wav2Vec2-Base-Superb-ER\n- **Edge Compute:** Localized GPU inference\n- **Structural Health:** Predictive anomaly detection")
         with col_r:
-            st.subheader("Reliability Metrics")
-            st.info("ROC-AUC Score: 0.98 (Mission Critical Grade)")
-            st.success("Current Autonomous Safety Index: 98.4%")
+            st.subheader("📈 Reliability Metrics")
+            st.info("ROC-AUC Score: 0.98")
+            st.success("Autonomous Safety Index: 98.4%")
+
+        st.divider()
+        
+        st.subheader("System Architecture & Deployment Protocols")
+        st.markdown("""
+        1. **Telemetry Ingestion:** Continuous monitoring of crew vitals, acoustic environments, and habitat structural sensors without interrupting daily operations.
+        2. **Edge Processing (Zero-Trust Latency):** All AI inference is run locally on the habitat's internal servers, requiring zero outbound data transfer to Earth for critical alerts.
+        3. **Autonomous Intervention:** The system can autonomously recommend lockouts, enforce rest cycles, or suggest mechanical bypasses based on dynamically calculated risk thresholds.
+        """)
 
     st.divider()
     st.caption("© 2026 Astrielle AI | Confidential Mission Telemetry")
