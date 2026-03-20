@@ -30,7 +30,7 @@ if not st.session_state.entered:
         <style>
             .stApp {
                 background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                            url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80&w=2000');
+                            url('https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 display: flex; align-items: center; justify-content: center;
             }
@@ -65,7 +65,7 @@ else:
         <style>
             .stApp {
                 background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), 
-                            url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80&w=2000');
+                            url('https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80&w=2000');
                 background-size: cover;
                 background-attachment: fixed;
             }
