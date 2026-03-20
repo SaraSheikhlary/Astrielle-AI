@@ -29,9 +29,10 @@ if not st.session_state.entered:
     st.markdown("""
         <style>
             .stApp {
-                background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                            url('https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80&w=2000');
+                background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), 
+                            url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=100&w=2500');
                 background-size: cover;
+                background-position: center;
                 display: flex; align-items: center; justify-content: center;
             }
             .landing-card {
@@ -64,9 +65,10 @@ else:
     st.markdown("""
         <style>
             .stApp {
-                background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), 
-                            url('https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80&w=2000');
+                background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), 
+                            url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=100&w=2500');
                 background-size: cover;
+                background-position: center;
                 background-attachment: fixed;
             }
             .stTabs [data-baseweb="tab-panel"] {
