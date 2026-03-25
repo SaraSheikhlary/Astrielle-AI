@@ -60,9 +60,23 @@ if not st.session_state.entered:
 
 # --- 4. THE MAIN DASHBOARD ---
 else:
-    # --- GLOBAL DASHBOARD STYLING (VIBRANT BACKGROUND) ---
+    # --- GLOBAL DASHBOARD STYLING (VIBRANT BACKGROUND & WHITE TEXT) ---
     st.markdown("""
         <style>
+            /* Force global text elements to white for readability */
+            h1, h2, h3, h4, h5, h6, p, span, label, .stMarkdown, .stText {
+                color: #FFFFFF !important;
+            }
+            
+            /* Make sure unselected tabs are light grey, and selected are bright white */
+            button[data-baseweb="tab"] p {
+                color: #AFAFAF !important; 
+            }
+            button[data-baseweb="tab"][aria-selected="true"] p {
+                color: #FFFFFF !important;
+                font-weight: bold;
+            }
+
             .stApp {
                 background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), 
                             url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80&w=2000');
